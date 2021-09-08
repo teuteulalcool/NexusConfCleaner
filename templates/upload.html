@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <script type = "text/javascript" 
+           src = "{{ url_for('static', filename = 'myjvs.js') }}" >
+        </script>
+     </head>
+   <body>
+    <h1><u> Manage all the files you'll need </u></h1>
+    <input type="button" onclick="window.location.href='/';" value="Main page" /><br/><br/><br/>  
+    <table border = 1>
+     <tr>   
+    <form action = "/uploader" method = "POST" enctype = "multipart/form-data">
+        <td>
+        <input type = "file" name = "file[]" multiple='True'/><br/>
+        </td>
+        <td>
+        <input type = "submit" name = "upload files" />
+        </td>
+      </form>
+    </tr>
+    </table>
+    <br/>
+      <table border = 1>
+        <form action = "/delete_input_files" method = "POST">
+            <tr>
+                <td>check/uncheck all<br/><input type="checkbox" id="checkUncheckAll" onClick="CheckUncheckAll()"/></td><td >filename<br/></td>
+           </tr>
+            {% for filename in files_input %}
+            <tr>
+                <td><input type = "checkbox" name = "files" value="{{ filename }}" /></td><td >{{ filename }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td><input type = "submit" value = "Delete all checked files" /></td>
+            </tr>
+         </form>
+     </table>
+   </body>
+</html>

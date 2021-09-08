@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <script type = "text/javascript" 
+           src = "{{ url_for('static', filename = 'myjvs.js') }}" >
+        </script>
+    </head>
+   <body>
+    <h1><u> output directory </u></h1>
+    <input type="button" onclick="window.location.href='/';" value="main page" /><br/><input type="button" onclick="window.location.href='/output';" value="Back 'output' page" />  
+    <br/><br/><br/>  
+    <table border = 1>
+        <form action = "/delete_output_files" method = "POST">
+        <tr><td><input type="checkbox" id="checkUncheckAll" onClick="CheckUncheckAll()"/></td><td><input type = "submit" value = "Delete" /></td></tr>
+        {% for file in files %}
+        <tr>
+            <td><input type="checkbox" name="files" value="{{ file[0] }}"/> 
+            </td>
+            <td>
+                <a href="{{ (request.path + '/' if request.path != '/' else '') + file[0] }}">
+                    {{ file[0] }}
+                </a>
+            </td>
+            <td>
+                {{ file[1] }}
+            </td>
+        </tr>
+        {% endfor %}
+        </form>
+    </table>
+   </body>
+</html>

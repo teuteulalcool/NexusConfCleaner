@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <script type = "text/javascript" 
+           src = "{{ url_for('static', filename = 'myjvs.js') }}" ></script>
+     </head>
+   <body>
+       <h1><u> Choose which option to clean </u></h1>
+            <input type="button" onclick="window.location.href='/';" value="Back to main page" /><br/><br/>
+            <form action = "/clean_process" method = "POST">
+                <input type = "submit" value = "Clean the files" />
+                
+                <table border = 1>
+                <tr>
+                    <td><input type="checkbox" name="basic" value="basic" {% if cleaning['basic'] %}checked{% endif %}/></td><td >Delete basic configuration ?</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="username" value="username" {% if cleaning['username'] %}checked{% endif %}/></td><td >use admin/cisco!123 credentials ?</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="access-list" value="access-list" {% if cleaning['access-list'] %}checked{% endif %}/></td><td >delete access-lists ?</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="shutdown-interfaces" value="shutdown-interfaces" {% if cleaning['access-list'] %}checked{% endif %}/></td><td >delete interfaces shutdown ?</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="management" value="management" onclick=HideShow() {% if cleaning['management'] %}checked{% endif %}/></td><td >delete vrf management and mgmt0 configuration ?</td>
+                </tr>
+                </table><br/>
+                <table id=HideTable border = 1>
+                    <tr>
+                        <td><b>Files</b></td><td><b>IP/Mask mgmt0</b></td><td><b>GW mgmt0</b></td>
+                    </tr>
+                    {% for file in cleaning['files'] %}
+                    <tr>
+                        <td>{{ file }}</td>
+                        <td><input type="text" name="{{ file }}-mgmt0" value="1.1.1.1/32"/></td>
+                        <td><input type="text" name="{{ file }}-GW" value="2.2.2.2"/></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <br/>
+                <table border = 1>
+                {% if vrf|length > 0 %}
+               
+                <tr>
+                    <td><input type="checkbox" id="checkUncheckAll" onClick="CheckUncheckAll()" /></td><td >Choose the Vrf to be deleted</td>
+               </tr>                
+                {% for v in vrf %}
+                <tr>
+                    <td><input type = "checkbox" name = "vrf" value="{{ v }}" /></td><td >{{ v }}</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+                
+             
+         </table>
+        </form>
+   </body>
+</html>

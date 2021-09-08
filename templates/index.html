@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <script type = "text/javascript" 
+           src = "{{ url_for('static', filename = 'myjvs.js') }}" ></script>
+     </head>
+   <body>
+       <h1><u> Step 1 : select all the files </u></h1>
+        <input type="button" onclick="window.location.href='/upload';" value="manage 'input' files" />
+        <input type="button" onclick="window.location.href='/output';" value="goto 'output' folder" />
+
+        <table border = 1>
+            <form action = "/clean" method = "POST"
+                <tr>
+                    <td><input type="checkbox" id="checkUncheckAll" onClick="CheckUncheckAll()"/></td>
+                    <td ><input type = "submit" value = "Clean" /></td>
+               </tr>
+                {% for filename in files_input %}
+                <tr>
+                    <td><input type = "checkbox" name = "files" value="{{ filename }}" /></td>
+                    <td >{{ filename }}</td>
+                </tr>
+                {% endfor %}
+                
+             </form>
+         </table>
+   </body>
+</html>
